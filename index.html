@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Editor with Live Preview</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      .panel {
+        flex: 1;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        overflow-y: auto;
+      }
+
+      #markdown-input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        resize: none;
+        outline: none;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      #markdown-output {
+        background-color: #f9f9f9;
+        padding: 10px;
+        word-wrap: break-word;
+      }
+
+      /* Basic Markdown styling */
+      #markdown-output h1 {
+        font-size: 2em;
+        margin-top: 0;
+      }
+
+      #markdown-output h2 {
+        font-size: 1.75em;
+      }
+
+      #markdown-output h3 {
+        font-size: 1.5em;
+      }
+
+      #markdown-output h4 {
+        font-size: 1.25em;
+      }
+
+      #markdown-output h5 {
+        font-size: 1em;
+      }
+
+      #markdown-output h6 {
+        font-size: 0.875em;
+      }
+
+      #markdown-output p {
+        margin: 0 0 1em;
+      }
+
+      #markdown-output ul,
+      #markdown-output ol {
+        margin: 0;
+        padding-left: 1.5em;
+      }
+
+      #markdown-output li {
+        margin-bottom: 0.5em;
+      }
+
+      #markdown-output blockquote {
+        border-left: 4px solid #ddd;
+        padding-left: 10px;
+        margin: 0;
+        color: #666;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+      }
+
+      #markdown-output code {
+        background-color: #f1f1f1;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      #markdown-output pre {
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      #markdown-output a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      #markdown-output a:hover {
+        text-decoration: underline;
+      }
+
+      /* Table styling */
+      #markdown-output table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+      }
+
+      #markdown-output th,
+      #markdown-output td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      #markdown-output th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+      }
+
+      #markdown-output tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      /* Image styling */
+      #markdown-output img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        background-color: #fff;
+      }
+
+      /* Horizontal rule styling */
+      #markdown-output hr {
+        border: 0;
+        border-top: 1px solid #ddd;
+        margin: 1em 0;
+      }
+
+      /* Task list styling */
+      #markdown-output .task-list-item {
+        margin-bottom: 0.5em;
+        list-style-type: none;
+      }
+
+      #markdown-output .task-list-item input[type="checkbox"] {
+        margin-right: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel" style="border-right: 2px solid #ddd">
+        <textarea
+          id="markdown-input"
+          placeholder="Type your markdown here..."
+        ></textarea>
+      </div>
+      <div class="panel" id="markdown-output">
+        <!-- Markdown will be rendered here -->
+      </div>
+    </div>
+
+    <!-- Load markdown-it from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("markdown-input");
+        const output = document.getElementById("markdown-output");
+
+        // Initialize markdown-it
+        const md = window.markdownit();
+
+        // Function to update the preview
+        const updatePreview = () => {
+          const markdownText = input.value;
+          output.innerHTML = md.render(markdownText);
+        };
+
+        // Event listener to update the preview on input
+        input.addEventListener("input", updatePreview);
+
+        // Initial call to display empty state
+        updatePreview();
+      });
+    </script>
+  </body>
+</html>
